@@ -46,7 +46,7 @@ variable "instance_names" {
 resource "aws_instance" "ec2" {
   count                  = length(var.user_data_scripts)
   ami                    = data.aws_ami.ubuntu.id
-  key_name               = "MYLABKEY" # Change key name as per your setup
+  key_name               = "frank_crem" # Change key name as per your setup
   instance_type          = var.instance_type[count.index]
   user_data              = file(var.user_data_scripts[count.index])
   vpc_security_group_ids = [aws_security_group.TerraBox.id]
@@ -63,7 +63,7 @@ resource "aws_instance" "ec2" {
 # Separate EC2 Instance for Terraform with IAM Profile and Folder Copy
 resource "aws_instance" "terraform_vm" {
   ami                    = data.aws_ami.ubuntu.id
-  key_name               = "MYLABKEY" # Change key name as per your setup
+  key_name               = "frank_crem" # Change key name as per your setup
   instance_type          = "t2.large" # Instance type for Terraform VM
   iam_instance_profile   = aws_iam_instance_profile.k8s_cluster_instance_profile.name
   vpc_security_group_ids = [aws_security_group.TerraBox.id]
@@ -85,7 +85,7 @@ resource "aws_instance" "terraform_vm" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("MYLABKEY.pem")
+      private_key = file("frank_crem.pem")
       host        = self.public_ip
     }
   }
@@ -99,7 +99,7 @@ resource "aws_instance" "terraform_vm" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("MYLABKEY.pem")
+      private_key = file("frank_crem.pem")
       host        = self.public_ip
     }
   }
